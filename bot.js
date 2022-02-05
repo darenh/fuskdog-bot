@@ -47,8 +47,21 @@ client.on('ready', async () => {
             member.setNickname(ups.toString() + " fuskdogersss!");
         });
         client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
-    }, 10000);
 
+        // fetch all msg from the fuskdog-count channel
+        let getMessagesFromChannel = await client.channels.cache.get('939578059969921075').messages.fetch();
+        // find the last message sent by the bot
+        let lastSentMessage = getMessagesFromChannel.find(m => m.author.id === '939376274978242581');
+        // filter out the text, we only want the number
+        let lastSentUpsCount = lastSentMessage.content.replace(/\D/g, "");
+
+        if(ups > parseInt(lastSentUpsCount))
+        {
+          const channel = client.channels.cache.get('939578059969921075');
+          channel.send('Fuskdog upvotes have increased! We are at: ' + ups);
+        }
+
+    }, 10000);
 })
 
  
