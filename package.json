@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "axios": "^0.25.0",
+    "discord.js": "^13.6.0"
+  },
+  "name": "fuskdog",
+  "version": "1.0.0",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
