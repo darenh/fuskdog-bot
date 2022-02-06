@@ -28,6 +28,7 @@ client.on('ready', async () => {
     client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
 
     setInterval(async () => {
+      try {
         const urbanDicResults = await axios({
             method: 'post',
             url: 'https://api.urbandictionary.com/v0/vote',
@@ -35,31 +36,42 @@ client.on('ready', async () => {
               defid: 16944520,
               direction: "up"
             }
-          });
-        let ups = "undefined";
+        });
+        let isNewUpvote = false;
         if (urbanDicResults && urbanDicResults.data) {
+          if (urbanDicResults.data.up > ups) {
+            isNewUpvote = true;
+          }
             ups = urbanDicResults.data.up;
         }
-        const guilds = await client.guilds.fetch();
-        guilds.each(async (guild) => {
-            const guildRes = await guild.fetch();
-            let member = guildRes.members.cache.get("939376274978242581");
-            member.setNickname(ups.toString() + " fuskdogersss!");
-        });
-        client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
+        if (isNewUpvote) {
+          const guilds = await client.guilds.fetch();
+          guilds.each(async (guild) => {
+              const guildRes = await guild.fetch();
+              let member = guildRes.members.cache.get("939376274978242581");
+              member.setNickname(ups.toString() + " fuskdogers!");
+          });
+          client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
+        }
 
         // fetch all msg from the fuskdog-count channel
         let getMessagesFromChannel = await client.channels.cache.get('939578059969921075').messages.fetch();
         // find the last message sent by the bot
         let lastSentMessage = getMessagesFromChannel.find(m => m.author.id === '939376274978242581');
         // filter out the text, we only want the number
-        let lastSentUpsCount = lastSentMessage.content.replace(/\D/g, "");
+        let lastSentUpsCount = -1;
+        if (lastSentMessage) {
+          lastSentUpsCount = lastSentMessage.content.replace(/\D/g, "");
+        }
 
         if(ups > parseInt(lastSentUpsCount))
         {
           const channel = client.channels.cache.get('939578059969921075');
           channel.send('Fuskdog upvotes have increased! We are at: ' + ups);
         }
+      } catch (error) {
+        console.log(error);
+      }
 
     }, 10000);
 })
