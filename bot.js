@@ -23,9 +23,9 @@ client.on('ready', async () => {
     guilds.each(async (guild) => {
         const guildRes = await guild.fetch();
         let member = guildRes.members.cache.get("939376274978242581");
-        member.setNickname(ups.toString() + " fuskdogers!");
+        member.setNickname(ups.toString() + " fuskdoggers!");
     });
-    client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
+    client.user.setActivity("https://www.urbandictionary.com/define.php?term=fuskdog", ({type: "WATCHING"}));
 
     setInterval(async () => {
       try {
@@ -49,9 +49,9 @@ client.on('ready', async () => {
           guilds.each(async (guild) => {
               const guildRes = await guild.fetch();
               let member = guildRes.members.cache.get("939376274978242581");
-              member.setNickname(ups.toString() + " fuskdogers!");
+              member.setNickname(ups.toString() + " fuskdoggers!");
           });
-          client.user.setActivity("#Fuskdog " + ups.toString() + " upvotes!", ({type: "WATCHING"}));
+          client.user.setActivity("https://www.urbandictionary.com/define.php?term=fuskdog", ({type: "WATCHING"}));
         }
 
         // fetch all msg from the fuskdog-count channel
@@ -63,11 +63,12 @@ client.on('ready', async () => {
         if (lastSentMessage) {
           lastSentUpsCount = lastSentMessage.content.replace(/\D/g, "");
         }
-
-        if(ups > parseInt(lastSentUpsCount))
+        if(isNewUpvote)
         {
           const channel = client.channels.cache.get('939578059969921075');
           channel.send('Fuskdog upvotes have increased! We are at: ' + ups);
+          const channel2 = client.channels.cache.get('818678013130178572');
+          channel2.send('Fuskdog upvotes have increased! We are at: ' + ups);
         }
       } catch (error) {
         console.log(error);
@@ -80,9 +81,9 @@ client.on('ready', async () => {
 
 client.on('messageCreate', message => {
 
-  if (message.content === 'ducks') {
+  if (message.content.toLocaleLowerCase().indexOf('fuskdog') !== -1 || message.content.toLocaleLowerCase().indexOf('fuskkdog') !== -1) {
 
-    message.reply('Banned.')
+    message.reply('No bun')
 
   }
 
