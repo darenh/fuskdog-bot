@@ -9,6 +9,7 @@ const urbannewFuskId = 16974731;
 
 client.on('ready', async () => {
   let upvotes = "undefined";
+  await sendPatchNotes(false);
   try {
     const urbanDicResults = await upvoteUrban(urbanFuskId);
     if (urbanDicResults && urbanDicResults.data) {
@@ -63,11 +64,35 @@ const upvoteUrban = async (id) => {
     });
 }
 
+const sendPatchNotes = async (send) => {
+  if (!send) {
+    return;
+  }
+  try {
+    const guilds = await client.guilds.fetch();
+    guilds.each(async (guild) => {
+      const guildRes = await guild.fetch();
+      let channels = await guildRes.channels.fetch();
+      channels.each((channel) => {
+        if (channel.type === 'GUILD_TEXT') {
+          if (channel.name === "general") {
+              channel.send('https://fuskdog.com');
+            }
+          }
+      });
+    });
+  } catch (error) {
+    console.error(error);
+    return "error";
+  }
+}
+
 const changeGuildNames = async (upvotes, isNewUpvote) => {
   try {
     const guilds = await client.guilds.fetch();
     guilds.each(async (guild) => {
       const guildRes = await guild.fetch();
+      // console.log(guildRes.name);
       if (isNewUpvote) {
         sendToChannels(guildRes, upvotes);
       }
@@ -87,9 +112,9 @@ const sendToChannels = async (guildRes, upvotes) => {
   channels.each((channel) => {
     if (channel.type === 'GUILD_TEXT') {
       if (channel.name === "general") {
-        if (upvotes % 5 === 0) {
+        if (upvotes % 50 === 0) {
           channel.send('Fuskdog upvotes have increased! We are at: ' + upvotes + "\n go to https://www.urbandictionary.com/define.php?term=fuskdog to upvote!");
-        } else {
+        } else if (upvotes % 10 === 0) {
           channel.send('Fuskdog upvotes have increased! We are at: ' + upvotes);
         }
       }
