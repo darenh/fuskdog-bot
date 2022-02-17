@@ -5,7 +5,6 @@ const token = config.TOKEN;
 const client = new Discord.Client({intents: ["GUILDS", "GUILD_MESSAGES"]});
 const fuskMemberId = "939376274978242581";
 const urbanFuskId = 16944520;
-const urbannewFuskId = 16974731;
 
 client.on('ready', async () => {
   let upvotes = "undefined";
