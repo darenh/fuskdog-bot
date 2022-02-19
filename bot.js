@@ -71,6 +71,8 @@ client.on('messageCreate', (msg) => {
         return 'Error';
       }
     }
+  } else if (command === 'define') {
+    msg.channel.send("https://www.urbandictionary.com/define.php?term=fuskdog");
   }
 })
 
@@ -163,7 +165,7 @@ const sendToChannels = async (guildRes) => {
 const checkForGoals = async (guildId, channel) => {
 
   refGoals.doc(guildId).get().then((doc) => {
-    if (doc.data().goal.includes(parseInt(upvotes)))
+    if (doc && doc.data() && doc.data().goal.includes(parseInt(upvotes)))
             channel.send(":rocket::rocket::rocket: Goal Reached: " + upvotes + " :rocket::rocket::rocket:");
   })
 }
