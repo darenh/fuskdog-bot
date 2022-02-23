@@ -81,7 +81,8 @@ client.on('messageCreate', message => {
     return;
   }
   if (message.content.toLocaleLowerCase().indexOf('fuskdog') !== -1 || message.content.toLocaleLowerCase().indexOf('fuskkdog') !== -1) {
-    message.reply('No bun')
+    message.reply('No bun');
+    message.react("🌭");
   }
 })
 
