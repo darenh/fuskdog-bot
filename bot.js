@@ -73,6 +73,8 @@ client.on('messageCreate', (msg) => {
     }
   } else if (command === 'define') {
     msg.channel.send("https://www.urbandictionary.com/define.php?term=fuskdog");
+  } else if (command === 'fusksite') {
+    msg.channel.send("https://www.fuskdog.com/");
   }
 })
 
@@ -98,7 +100,7 @@ const sendPatchNotes = async (send) => {
       channels.each((channel) => {
         if (channel.type === 'GUILD_TEXT') {
           if (channel.name === "general") {
-              channel.send('https://fuskdog.com');
+              channel.send('Patch Notes V1.7\nWe are updating fuskdog to support goals per server!\nFuskdog now has commands ?define ?fusksite ?setgoal [amount]. Finally, fuskdog will send a message every 50 upvotes. Thank you for the recent support and feedback! Stay fusky!!!');
             }
           }
       });
@@ -152,9 +154,9 @@ const sendToChannels = async (guildRes) => {
 
         checkForGoals(guildRes.id, channel);
 
-        if (upvotes % 50 === 0) {
+        if (upvotes % 100 === 0) {
           channel.send('Fuskdog upvotes have increased! We are at: ' + upvotes + "\n go to https://www.urbandictionary.com/define.php?term=fuskdog to upvote!");
-        } else if (upvotes % 10 === 0) {
+        } else if (upvotes % 50 === 0) {
           channel.send('Fuskdog upvotes have increased! We are at: ' + upvotes);
         }
       }
